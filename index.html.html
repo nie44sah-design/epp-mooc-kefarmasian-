@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EPP MOOC — Standar Pelayanan Kefarmasian di Puskesmas</title>
+<style>
+  /* ── TOKENS ─────────────────────────────────── */
+  :root {
+    --navy:    #1F5C8B;
+    --teal:    #1A7A6A;
+    --green:   #1A7A4A;
+    --purple:  #5B3A8C;
+    --amber:   #B7770D;
+    --slate:   #2C3E50;
+    --mid:     #5A6A7A;
+    --fog:     #E8EDF2;
+    --white:   #FFFFFF;
+    --lgreen:  #D5F5E3;
+    --lblue:   #D6EAF8;
+    --lpurple: #F0EAF8;
+    --lamber:  #FEF9E7;
+    --danger:  #C0392B;
+    --r:       8px;
+    --rL:      14px;
+    --shadow:  0 2px 12px rgba(0,0,0,0.08);
+    --shadowH: 0 6px 24px rgba(0,0,0,0.14);
+  }
+
+  /* ── RESET & BASE ────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; font-size: 15px; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #F0F4F8;
+    color: var(--slate);
+    line-height: 1.65;
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ─────────────────────────────────── */
+  .site-header {
+    background: linear-gradient(135deg, var(--navy) 0%, #2E86C1 100%);
+    color: var(--white);
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.2);
+  }
+  .header-inner {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .header-logo {
+    width: 38px; height: 38px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px; flex-shrink: 0;
+  }
+  .header-text h1 { font-size: 0.95rem; font-weight: 700; letter-spacing: 0.01em; }
+  .header-text p  { font-size: 0.75rem; opacity: 0.8; margin-top: 1px; }
+
+  /* ── PROGRESS BAR ────────────────────────────── */
+  .progress-wrap {
+    background: rgba(255,255,255,0.15);
+    height: 4px;
+  }
+  .progress-bar {
+    height: 4px;
+    background: #A8D8A8;
+    width: 0%;
+    transition: width 0.4s ease;
+  }
+
+  /* ── MAIN LAYOUT ─────────────────────────────── */
+  .main {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 28px 16px 60px;
+  }
+
+  /* ── COVER ───────────────────────────────────── */
+  .cover {
+    background: var(--white);
+    border-radius: var(--rL);
+    padding: 36px 32px;
+    box-shadow: var(--shadow);
+    margin-bottom: 24px;
+    border-top: 5px solid var(--navy);
+  }
+  .cover-badge {
+    display: inline-block;
+    background: var(--lblue);
+    color: var(--navy);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-bottom: 14px;
+  }
+  .cover h2 {
+    font-size: 1.55rem;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1.25;
+    margin-bottom: 6px;
+  }
+  .cover .subtitle {
+    color: var(--teal);
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 20px;
+  }
+  .cover-notice {
+    background: var(--lgreen);
+    border-left: 4px solid var(--green);
+    border-radius: var(--r);
+    padding: 14px 18px;
+    font-size: 0.875rem;
+    line-height: 1.6;
+  }
+  .cover-notice strong { color: var(--green); }
+  .cover-meta {
+    display: flex;
+    gap: 24px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+  }
+  .cover-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    color: var(--mid);
+  }
+  .cover-meta-item span { font-size: 1rem; }
+
+  /* ── SECTION CARD ────────────────────────────── */
+  .section-card {
+    background: var(--white);
+    border-radius: var(--rL);
+    box-shadow: var(--shadow);
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 24px;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s;
+  }
+  .section-header:hover { background: var(--fog); }
+  .section-tag {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border-radius: 6px;
+    color: var(--white);
+    flex-shrink: 0;
+  }
+  .tag-a { background: var(--navy); }
+  .tag-b { background: var(--green); }
+  .tag-c { background: #2E86C1; }
+  .tag-d { background: var(--purple); }
+  .section-title-wrap { flex: 1; }
+  .section-title { font-size: 1rem; font-weight: 700; }
+  .section-desc { font-size: 0.78rem; color: var(--mid); margin-top: 2px; }
+  .section-chevron {
+    font-size: 1.1rem;
+    color: var(--mid);
+    transition: transform 0.25s;
+    flex-shrink: 0;
+  }
+  .section-card.open .section-chevron { transform: rotate(180deg); }
+  .section-body {
+    display: none;
+    padding: 0 24px 24px;
+    border-top: 1px solid var(--fog);
+  }
+  .section-card.open .section-body { display: block; }
+
+  /* ── NOTICE BOX ──────────────────────────────── */
+  .notice {
+    margin: 16px 0;
+    padding: 12px 16px;
+    border-radius: var(--r);
+    font-size: 0.83rem;
+    line-height: 1.6;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .notice-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+  .notice-blue  { background: var(--lblue);   border-left: 3px solid var(--navy); }
+  .notice-green { background: var(--lgreen);  border-left: 3px solid var(--green); }
+  .notice-amber { background: var(--lamber);  border-left: 3px solid var(--amber); }
+  .notice-purple{ background: var(--lpurple); border-left: 3px solid var(--purple); }
+
+  /* ── FORM ELEMENTS ───────────────────────────── */
+  .field { margin-top: 20px; }
+  .field-label {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--slate);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+  .required-dot {
+    color: var(--danger);
+    font-size: 0.65rem;
+    margin-left: 2px;
+  }
+
+  /* Radio & checkbox options */
+  .options { display: flex; flex-direction: column; gap: 8px; }
+  .option-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    border: 1.5px solid #D4DCE5;
+    border-radius: var(--r);
+    cursor: pointer;
+    transition: all 0.15s;
+    font-size: 0.875rem;
+  }
+  .option-item:hover { border-color: var(--navy); background: var(--lblue); }
+  .option-item input[type="radio"],
+  .option-item input[type="checkbox"] {
+    accent-color: var(--navy);
+    width: 16px; height: 16px;
+    flex-shrink: 0;
+  }
+  .option-item.selected {
+    border-color: var(--navy);
+    background: var(--lblue);
+    font-weight: 600;
+  }
+  .option-item.correct  { border-color: var(--green);  background: var(--lgreen); }
+  .option-item.wrong    { border-color: var(--danger);  background: #FDECEA; }
+
+  /* Text input & textarea */
+  .text-input, .select-input, textarea {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid #D4DCE5;
+    border-radius: var(--r);
+    font-family: inherit;
+    font-size: 0.875rem;
+    color: var(--slate);
+    transition: border-color 0.15s;
+    background: var(--white);
+    resize: vertical;
+  }
+  .text-input:focus, .select-input:focus, textarea:focus {
+    outline: none;
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(31,92,139,0.1);
+  }
+
+  /* Likert scale */
+  .likert-wrap {
+    overflow-x: auto;
+    margin-top: 8px;
+  }
+  .likert-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    min-width: 520px;
+  }
+  .likert-table thead th {
+    padding: 8px 6px;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.72rem;
+    background: var(--navy);
+    color: var(--white);
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .likert-table thead th:first-child {
+    text-align: left;
+    width: 48%;
+    padding-left: 12px;
+  }
+  .likert-table tbody tr { border-bottom: 1px solid var(--fog); }
+  .likert-table tbody tr:last-child { border-bottom: none; }
+  .likert-table tbody tr:hover { background: var(--fog); }
+  .likert-table tbody td {
+    padding: 10px 6px;
+    text-align: center;
+    vertical-align: middle;
+  }
+  .likert-table tbody td:first-child {
+    text-align: left;
+    padding-left: 12px;
+    font-size: 0.83rem;
+    vertical-align: middle;
+  }
+  .likert-table input[type="radio"] {
+    accent-color: var(--navy);
+    width: 17px; height: 17px;
+    cursor: pointer;
+  }
+  .likert-scale-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.72rem;
+    color: var(--mid);
+    margin-top: 6px;
+    padding: 0 2px;
+  }
+
+  /* Checkbox list */
+  .checkbox-list { display: flex; flex-direction: column; gap: 6px; }
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 14px;
+    border: 1.5px solid #D4DCE5;
+    border-radius: var(--r);
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.15s;
+  }
+  .check-item:hover { border-color: #2E86C1; background: var(--lblue); }
+  .check-item input { accent-color: var(--navy); width: 16px; height: 16px; flex-shrink: 0; }
+
+  /* Sub-header within section */
+  .sub-header {
+    margin: 28px 0 4px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--fog);
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .sub-header::before {
+    content: '';
+    display: inline-block;
+    width: 4px; height: 16px;
+    background: var(--navy);
+    border-radius: 2px;
+  }
+
+  /* PG question */
+  .pg-card {
+    background: #FAFBFC;
+    border: 1.5px solid #E0E6EC;
+    border-radius: var(--r);
+    margin-top: 16px;
+    overflow: hidden;
+  }
+  .pg-question {
+    padding: 14px 16px 12px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    background: var(--fog);
+    border-bottom: 1px solid #E0E6EC;
+    line-height: 1.5;
+  }
+  .pg-num {
+    display: inline-block;
+    background: var(--green);
+    color: var(--white);
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 2px 8px;
+    border-radius: 4px;
+    margin-right: 6px;
+  }
+  .pg-options { padding: 10px 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+  .pg-option {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 9px 12px;
+    border: 1.5px solid #D4DCE5;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.845rem;
+    line-height: 1.5;
+    transition: all 0.12s;
+    background: var(--white);
+  }
+  .pg-option:hover { border-color: var(--green); background: var(--lgreen); }
+  .pg-option input { accent-color: var(--green); flex-shrink: 0; margin-top: 2px; width: 15px; height: 15px; }
+  .pg-option.selected { border-color: var(--green); background: var(--lgreen); }
+  .pg-feedback {
+    display: none;
+    margin: 8px 12px 12px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    line-height: 1.55;
+  }
+  .pg-feedback.correct { background: var(--lgreen); border-left: 3px solid var(--green); color: #145A32; display: block; }
+  .pg-feedback.wrong   { background: #FDECEA;       border-left: 3px solid var(--danger); color: #922B21; display: block; }
+
+  /* ── NAVIGATION ──────────────────────────────── */
+  .nav-strip {
+    display: flex;
+    gap: 10px;
+    margin-top: 24px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    border-radius: var(--r);
+    font-family: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: all 0.15s;
+  }
+  .btn-primary {
+    background: var(--navy);
+    color: var(--white);
+  }
+  .btn-primary:hover { background: #17496E; transform: translateY(-1px); box-shadow: var(--shadowH); }
+  .btn-secondary {
+    background: var(--fog);
+    color: var(--slate);
+    border: 1.5px solid #D4DCE5;
+  }
+  .btn-secondary:hover { background: #DCE3EA; }
+  .btn-success {
+    background: var(--green);
+    color: var(--white);
+  }
+  .btn-success:hover { background: #145A32; transform: translateY(-1px); box-shadow: var(--shadowH); }
+  .btn-danger {
+    background: #C0392B;
+    color: var(--white);
+  }
+  .btn-danger:hover { background: #922B21; }
+
+  /* ── RESULT CARD ─────────────────────────────── */
+  .result-card {
+    display: none;
+    background: var(--white);
+    border-radius: var(--rL);
+    box-shadow: var(--shadow);
+    margin-top: 24px;
+    overflow: hidden;
+    border-top: 5px solid var(--green);
+  }
+  .result-card.show { display: block; }
+  .result-header {
+    background: linear-gradient(135deg, var(--green), #2ECC71);
+    color: var(--white);
+    padding: 28px 28px 22px;
+    text-align: center;
+  }
+  .result-header h2 { font-size: 1.4rem; margin-bottom: 6px; }
+  .result-score-big {
+    font-size: 3.5rem;
+    font-weight: 900;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin: 10px 0 4px;
+  }
+  .result-label { font-size: 0.88rem; opacity: 0.85; }
+  .result-body { padding: 24px 28px; }
+  .result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .result-stat {
+    background: var(--fog);
+    border-radius: var(--r);
+    padding: 14px 16px;
+    text-align: center;
+  }
+  .result-stat-num { font-size: 1.6rem; font-weight: 800; color: var(--navy); }
+  .result-stat-lbl { font-size: 0.75rem; color: var(--mid); margin-top: 2px; }
+  .result-interp {
+    padding: 14px 18px;
+    border-radius: var(--r);
+    font-size: 0.88rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .export-area {
+    background: #F8FAFB;
+    border: 1.5px dashed #B0BEC5;
+    border-radius: var(--r);
+    padding: 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.72rem;
+    white-space: pre-wrap;
+    word-break: break-all;
+    max-height: 180px;
+    overflow-y: auto;
+    color: var(--slate);
+    margin: 14px 0;
+  }
+
+  /* ── FOOTER ──────────────────────────────────── */
+  .site-footer {
+    background: var(--slate);
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    padding: 16px;
+    font-size: 0.75rem;
+    margin-top: 40px;
+  }
+
+  /* ── RESPONSIVE ──────────────────────────────── */
+  @media (max-width: 600px) {
+    .cover { padding: 22px 18px; }
+    .cover h2 { font-size: 1.25rem; }
+    .section-body { padding: 0 16px 20px; }
+    .result-grid { grid-template-columns: 1fr; }
+    .header-inner { padding: 10px 16px; }
+    .main { padding: 16px 10px 50px; }
+  }
+
+  /* Validation highlight */
+  .field.invalid .text-input,
+  .field.invalid textarea,
+  .field.invalid .select-input { border-color: var(--danger); }
+  .field.invalid .field-label { color: var(--danger); }
+  .error-msg {
+    color: var(--danger);
+    font-size: 0.76rem;
+    margin-top: 4px;
+    display: none;
+  }
+  .field.invalid .error-msg { display: block; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-logo">💊</div>
+    <div class="header-text">
+      <h1>Evaluasi Pasca Pelatihan (EPP)</h1>
+      <p>MOOC Standar Pelayanan Kefarmasian di Puskesmas — BBPK Ciloto 2024</p>
+    </div>
+  </div>
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+</header>
+
+<div class="main">
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="cover-badge">BBPK Ciloto × Himpunan Seminat Farmasi Kesehatan Masyarakat</div>
+    <h2>Evaluasi Pasca Pelatihan</h2>
+    <p class="subtitle">MOOC Standar Pelayanan Kefarmasian di Puskesmas</p>
+    <div class="cover-notice">
+      Kuesioner ini terdiri dari <strong>4 bagian</strong> dan dapat diselesaikan dalam <strong>10–15 menit</strong>.<br>
+      Jawaban Anda bersifat <strong>anonim dan rahasia</strong> — tidak memengaruhi sertifikat atau status kepegawaian.<br>
+      Data digunakan semata-mata untuk <strong>perbaikan program pelatihan MOOC selanjutnya.</strong>
+    </div>
+    <div class="cover-meta">
+      <div class="cover-meta-item"><span>📋</span> 4 bagian</div>
+      <div class="cover-meta-item"><span>⏱</span> ±10–15 menit</div>
+      <div class="cover-meta-item"><span>🔒</span> Anonim & rahasia</div>
+      <div class="cover-meta-item"><span>📅</span> Diisi 3 bulan pasca pelatihan</div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- BAGIAN A                                  -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section-card open" id="secA">
+    <div class="section-header" onclick="toggleSection('secA')">
+      <span class="section-tag tag-a">A</span>
+      <div class="section-title-wrap">
+        <div class="section-title">Profil Alumni &amp; Konteks Kerja</div>
+        <div class="section-desc">8 pertanyaan — pilihan ganda &amp; isian singkat</div>
+      </div>
+      <span class="section-chevron">▾</span>
+    </div>
+    <div class="section-body">
+      <div class="notice notice-blue"><span class="notice-icon">ℹ️</span>Data ini digunakan untuk analisis kelompok responden, bukan untuk mengidentifikasi individu.</div>
+
+      <div class="field" id="fA1">
+        <div class="field-label">A1. Nama (inisial, opsional)</div>
+        <input class="text-input" type="text" id="A1" placeholder="Contoh: AN, DR, WW...">
+      </div>
+
+      <div class="field" id="fA2">
+        <div class="field-label">A2. Jenis Profesi <span class="required-dot">●</span></div>
+        <div class="options" id="A2">
+          <label class="option-item"><input type="radio" name="A2" value="Apoteker"> Apoteker</label>
+          <label class="option-item"><input type="radio" name="A2" value="TTK"> Tenaga Teknis Kefarmasian (TTK)</label>
+          <label class="option-item"><input type="radio" name="A2" value="Lainnya"> Lainnya</label>
+        </div>
+        <p class="error-msg">Pilih salah satu jawaban</p>
+      </div>
+
+      <div class="field" id="fA3">
+        <div class="field-label">A3. Status Kepegawaian <span class="required-dot">●</span></div>
+        <div class="options" id="A3">
+          <label class="option-item"><input type="radio" name="A3" value="PNS"> PNS</label>
+          <label class="option-item"><input type="radio" name="A3" value="PPPK"> PPPK</label>
+          <label class="option-item"><input type="radio" name="A3" value="Kontrak"> Tenaga Kontrak</label>
+          <label class="option-item"><input type="radio" name="A3" value="Lainnya"> Lainnya</label>
+        </div>
+        <p class="error-msg">Pilih salah satu jawaban</p>
+      </div>
+
+      <div class="field" id="fA4">
+        <div class="field-label">A4. Lama bertugas di Puskesmas <span class="required-dot">●</span></div>
+        <div class="options" id="A4">
+          <label class="option-item"><input type="radio" name="A4" value="<1"> Kurang dari 1 tahun</label>
+          <label class="option-item"><input type="radio" name="A4" value="1-3"> 1–3 tahun</label>
+          <label class="option-item"><input type="radio" name="A4" value="4-6"> 4–6 tahun</label>
+          <label class="option-item"><input type="radio" name="A4" value=">6"> Lebih dari 6 tahun</label>
+        </div>
+        <p class="error-msg">Pilih salah satu jawaban</p>
+      </div>
+
+      <div class="field" id="fA5">
+        <div class="field-label">A5. Provinsi tempat bertugas <span class="required-dot">●</span></div>
+        <input class="text-input" type="text" id="A5" placeholder="Contoh: Jawa Barat, Sulawesi Tengah...">
+        <p class="error-msg">Mohon isi kolom ini</p>
+      </div>
+
+      <div class="field" id="fA6">
+        <div class="field-label">A6. Kabupaten / Kota <span class="required-dot">●</span></div>
+        <input class="text-input" type="text" id="A6" placeholder="Contoh: Kab. Garut, Kota Palu...">
+        <p class="error-msg">Mohon isi kolom ini</p>
+      </div>
+
+      <div class="field" id="fA7">
+        <div class="field-label">A7. Apakah saat ini Anda masih aktif bertugas di Puskesmas? <span class="required-dot">●</span></div>
+        <div class="options" id="A7">
+          <label class="option-item"><input type="radio" name="A7" value="Ya"> Ya, masih aktif</label>
+          <label class="option-item"><input type="radio" name="A7" value="Tidak"> Tidak (sudah pindah / tidak lagi bertugas)</label>
+        </div>
+        <p class="error-msg">Pilih salah satu jawaban</p>
+      </div>
+
+      <div class="field" id="fA8">
+        <div class="field-label">A8. Motivasi utama mengikuti MOOC ini <span class="required-dot">●</span></div>
+        <div class="options" id="A8">
+          <label class="option-item"><input type="radio" name="A8" value="Kompetensi"> Kebutuhan pengembangan kompetensi</label>
+          <label class="option-item"><input type="radio" name="A8" value="SKP"> Memenuhi persyaratan SKP / CPD</label>
+          <label class="option-item"><input type="radio" name="A8" value="Atasan"> Diminta atasan / instansi</label>
+          <label class="option-item"><input type="radio" name="A8" value="Eksplorasi"> Ingin tahu / eksplorasi mandiri</label>
+        </div>
+        <p class="error-msg">Pilih salah satu jawaban</p>
+      </div>
+
+      <div class="nav-strip">
+        <button class="btn btn-primary" onclick="nextSection('secA','secB')">Lanjut ke Bagian B ▶</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- BAGIAN B                                  -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section-card" id="secB">
+    <div class="section-header" onclick="toggleSection('secB')">
+      <span class="section-tag tag-b">B</span>
+      <div class="section-title-wrap">
+        <div class="section-title">Retensi Pengetahuan</div>
+        <div class="section-desc">15 soal pilihan ganda — jawab tanpa membuka modul</div>
+      </div>
+      <span class="section-chevron">▾</span>
+    </div>
+    <div class="section-body">
+      <div class="notice notice-green"><span class="notice-icon">📝</span>Pilih SATU jawaban paling tepat untuk setiap soal. Kerjakan secara spontan — jawaban alami Anda mencerminkan sejauh mana ilmu ini telah melekat. Setelah menjawab, akan muncul umpan balik langsung.</div>
+
+      <div class="sub-header">B.1 — Konsep Pelayanan Kefarmasian</div>
+
+      <!-- Soal 1 -->
+      <div class="pg-card">
+        <div class="pg-question"><span class="pg-num">1</span>Pelayanan kefarmasian di Puskesmas mencakup dua kegiatan utama. Pasangan yang TEPAT adalah...</div>
+        <div class="pg-options" id="pgOpts1">
+          <label class="pg-option"><input type="radio" name="pg1" value="A" onchange="checkPG(1,'B')"> Pelayanan rawat jalan dan pelayanan rawat inap</label>
+          <label class="pg-option"><input type="radio" name="pg1" value="B" onchange="checkPG(1,'B')"> Pengelolaan sediaan farmasi &amp; BMHP, serta pelayanan farmasi klinis</label>
+          <label class="pg-option"><input type="radio" name="pg1" value="C" onchange="checkPG(1,'B')"> Pelayanan resep dan pelayanan laboratorium</label>
+          <label class="pg-option"><input type="radio" name="pg1" value="D" onchange="checkPG(1,'B')"> Pengelolaan anggaran obat dan pelayanan konsultasi dokter</label>
+        </div>
+        <div class="pg-feedback" id="pgFb1"></div>
+      </div>
+
+      <!-- Soal 2 -->
+      <div class="pg-card">
+        <div class="pg-question"><span class="pg-num">2</span>Rasio tenaga Apoteker yang dipersyaratkan dalam penyelenggaraan pelayanan kefarmasian di Puskesmas adalah...</div>
+        <div class="pg-options" id="pgOpts2">
+          <label class="pg-option"><input type="radio" name="pg2" value="A" onchange="checkPG(2,'C')"> 1 Apoteker untuk 100 pasien per hari</label>
+          <label class="pg-option"><input type="radio" name="pg2" value="B" onchange="checkPG(2,'C')"> 1 Apoteker untuk 30 pasien per hari</label>
+          <label class="pg-option"><input type="radio" name="pg2" value="C" onchange="checkPG(2,'C')"> 1 Apoteker untuk 50 pasien per hari</label>
+          <label class="pg-option"><input type="radio" name="pg2" value="D" onchange="checkPG(2,'C')"> 1 Apoteker untuk setiap unit layanan di Puskesmas</label>
+        </div>
+        <div class="pg-feedback" id="pgFb2"></div>
+      </div>
+
+      <!-- Soal 3 -->
+      <div class="pg-card">
+        <div class="pg-question"><span class="pg-num">3</span>Dalam pengendalian mutu, unsur 'Masukan (Input)' mencakup hal berikut, KECUALI...</div>
+        <div class="pg-options" id="pgOpts3">
+          <label class="pg-option"><input type="radio" name="pg3" value="A" onchange="checkPG(3,'D')"> Sumber daya manusia</label>
+          <label class="pg-option"><input type="radio" name="pg3" value="B" onchange="checkPG(3,'D')"> Sarana dan prasarana</label>
+          <label class="pg-option"><input type="radio" name="pg3" value="C" onchange="checkPG(3,'D')"> Standar Prosedur Operasional (SOP)</label>
+          <label class="pg-option"><input type="radio" name="pg3" value="D" onchange="checkPG(3,'D')"> Tindakan komunikasi dan kerjasama antar staf</label>
+        </div>
+        <div class="pg-feedback" id="pgFb3"></div>
+      </div>
+
+      <!-- Soal 4 -->
+      <div class="pg-card">
+        <div class="pg-question"><span class="pg-num">4</span>Evaluasi dengan pengambilan data secara RETROSPEKTIF berarti...</div>
+        <div class="pg-options" id="pgOpts4">
+          <label class="pg-option"><input type="radio" name="pg4" value="A" onchange="checkPG(4,'B')"> Pengambilan data dijalankan bersamaan dengan pelaksanaan pelayanan</label>
+          <label class="pg-option"><input type="radio" name="pg4" value="B" onchange="checkPG(4,'B')"> Pengambilan data dilakukan setelah pelayanan dilaksanakan</label>
+          <label class="pg-option"><input type="radio" name="pg4" value="C" onchange="checkPG(4,'B')"> Data diperoleh langsung dari pasien melalui wawancara</label>
+          <label class="pg-option"><input type="radio" name="pg4" value="D" onchange="checkPG(4,'B')"> Evaluasi dilakukan oleh pihak eksternal Puskesmas</label>
+        </div>
+        <div class="pg-feedback" id="pgFb4"></div>
+      </div>
+
+      <div class="sub-header">B.2 — Sumber Daya Kefarmasian</div>
+
+      <!-- Soal 5 -->
+      <div class="pg-card">
+        <div class="pg-question"><span class="pg-num">5</span>Seluruh tenaga kefarmasian yang bertugas di Puskesmas WAJIB memiliki...</div>
+        <div class="pg-options" id="pgOpts5">
+          <label class="pg-option"><input type="radio" name="pg5" value="A" onchange="checkPG(5,'B')"> Ijazah profesi dan surat rekomendasi dari organisasi profesi</label>
+          <label class="pg-option"><input type="radio" name="pg5" value="B" onchange="checkPG(5,'B')"> Surat Tanda Registrasi (STR) dan Surat Izin Praktik (SIP)</label>
+          <label class="pg-option"><input type="radio" name="pg5" value="C" onchange="checkPG(5,'B')"> Sertifikat pelatihan kefarmasian dari BBPK/Bapelkes</label>
+          <label class="pg-option"><input type="radio" name="pg5" value="D" onchange="checkPG(5,'B')"> Surat penugasan dari Kepala Dinas Kesehatan Kabupaten/Kota</label>
+        </div>
+        <div class="pg-feedback" id="pgFb5"></div>
+      </div>
+
+      <!-- Soal 6 -->
+      <div class="pg-card">
+        <div class="pg-question"><span class="pg-num">6</span>Lemari penyimpanan KHUSUS yang harus dikunci di Puskesmas diperuntukkan terutama bagi...</div>
+        <div class="pg-options" id="pgOpts6">
+          <label class="pg-option"><input type="radio" name="pg6" value="A" onchange="checkPG(6,'C')"> Obat generik dan obat program</label>
+          <label class="pg-option"><input type="radio" name="pg6" value="B" onchange="checkPG(6,'C')"> Obat High Alert dan LASA</label>
+          <label class="pg-option"><input type="radio" name="pg6" value="C" onchange="checkPG(6,'C')"> Narkotika dan psikotropika</label>
+          <label class="pg-option"><input type="radio" name="pg6" value="D" onchange="checkPG(6,'C')"> Vaksin dan obat termolabil</label>
+        </div>
+        <div class="pg-feedback" id="pgFb6"></div>
+      </div>
+
+      <!-- Soal 7 -->
+      <div class="pg-card">
+        <div class="pg-question"><span class="pg-num">7</span>Istilah 'Ruang' dalam sarana dan prasarana kefarmasian di Puskesmas bermakna...</div>
+        <div class="pg-options" id="pgOpts7">
+          <label class="pg-option"><input type="radio" name="pg7" value="A" onchange="checkPG(7,'B')"> Ruang fisik tersendiri yang terpisah secara permanen dari ruang lainnya</label>
+          <label class="pg-option"><input type="radio" name="pg7" value="B" onchange="checkPG(7,'B')"> Fungsi yang dilakukan, tidak harus berupa ruang fisik tersendiri asal ada pemisahan yang jelas</label>
+          <label class="pg-option"><input type="radio" name="pg7" value="C" onchange="checkPG(7,'B')"> Area minimal 9 m² yang memiliki pintu dan ventilasi tersendiri</label>
+          <label class="pg-option"><input type="radio" name="pg7" value="D" onchange="checkPG(7,'B')"> Ruang yang telah mendapat sertifikasi dari Dinas Kesehatan setempat</label>
+        </div>
+        <div class="pg-feedback" id="pgFb7"></div>
+      </div>
+
+      <div class="sub-header">B.3 — Pengelolaan Sediaan Farmasi dan BMHP</div>
+
+      <!-- Soal 8 -->
+      <div class="pg-card">
+        <div class="pg-question"><span class="pg-num">8</span>Proses seleksi perencanaan sediaan farmasi di Puskesmas harus mengacu pada daftar berikut, KECUALI...</div>
+        <div class="pg-options" id="pgOpts8">
+          <label class="pg-option"><input type="radio" name="pg8" value="A" onchange="checkPG(8,'C')"> Daftar Obat Esensial Nasional (DOEN)</label>
+          <label class="pg-option"><input type="radio" name="pg8" value="B" onchange="checkPG(8,'C')"> Formularium Nasional dan Formularium Kabupaten</label>
+          <label class="pg-option"><input type="radio" name="pg8" value="C" onchange="checkPG(8,'C')"> Katalog harga obat dari distributor farmasi terpercaya</label>
+          <label class="pg-option"><input type="radio" name="pg8" value="D" onchange="checkPG(8,'C')"> Formularium Puskesmas</label>
+        </div>
+        <div class="pg-feedback" id="pgFb8"></div>
+      </div>
+
+      <!-- Soal 9 -->
+      <div class="pg-card">
+        <div class="pg-question"><span class="pg-num">9</span>Dokumen LPLPO dalam proses permintaan obat bulanan Puskesmas harus ditandatangani oleh...</div>
+        <div class="pg-options" id="pgOpts9">
+          <label class="pg-option"><input type="radio" name="pg9" value="A" onchange="checkPG(9,'B')"> Kepala Dinas Kesehatan Kabupaten/Kota</label>
+          <label class="pg-option"><input type="radio" name="pg9" value="B" onchange="checkPG(9,'B')"> Tenaga kefarmasian dan diketahui oleh Kepala Puskesmas</label>
+          <label class="pg-option"><input type="radio" name="pg9" value="C" onchange="checkPG(9,'B')"> Apoteker penanggung jawab dan Badan Pengawas Obat dan Makanan</label>
+          <label class="pg-option"><input type="radio" name="pg9" value="D" onchange="checkPG(9,'B')"> Bendahara Puskesmas dan Kepala Bidang Farmasi Dinas Kesehatan</label>
+        </div>
+        <div class="pg-feedback" id="pgFb9"></div>
+      </div>
+
+      <!-- Soal 10 -->
+      <div class="pg-card">
+        <div class="pg-question"><span class="pg-num">10</span>Kunci lemari penyimpanan narkotika dan psikotropika di Puskesmas harus dipegang oleh...</div>
+        <div class="pg-options" id="pgOpts10">
+          <label class="pg-option"><input type="radio" name="pg10" value="A" onchange="checkPG(10,'C')"> Kepala Puskesmas</label>
+          <label class="pg-option"><input type="radio" name="pg10" value="B" onchange="checkPG(10,'C')"> Tenaga administrasi yang ditunjuk</label>
+          <label class="pg-option"><input type="radio" name="pg10" value="C" onchange="checkPG(10,'C')"> Apoteker penanggung jawab</label>
+          <label class="pg-option"><input type="radio" name="pg10" value="D" onchange="checkPG(10,'C')"> Petugas keamanan Puskesmas</label>
+        </div>
+        <div class="pg-feedback" id="pgFb10"></div>
+      </div>
+
+      <!-- Soal 11 -->
+      <div class="pg-card">
+        <div class="pg-question"><span class="pg-num">11</span>Arsip dokumen pencatatan dan pelaporan pengelolaan obat wajib disimpan selama sekurang-kurangnya...</div>
+        <div class="pg-options" id="pgOpts11">
+          <label class="pg-option"><input type="radio" name="pg11" value="A" onchange="checkPG(11,'C')"> 1 (satu) tahun</label>
+          <label class="pg-option"><input type="radio" name="pg11" value="B" onchange="checkPG(11,'C')"> 3 (tiga) tahun</label>
+          <label class="pg-option"><input type="radio" name="pg11" value="C" onchange="checkPG(11,'C')"> 5 (lima) tahun</label>
+          <label class="pg-option"><input type="radio" name="pg11" value="D" onchange="checkPG(11,'C')"> 10 (sepuluh) tahun</label>
+        </div>
+        <div class="pg-feedback" id="pgFb11"></div>
+      </div>
+
+      <!-- Soal 12 -->
+      <div class="pg-card">
+        <div class="pg-question"><span class="pg-num">12</span>Pengendalian sediaan farmasi di Puskesmas bertujuan untuk memastikan...</div>
+        <div class="pg-options" id="pgOpts12">
+          <label class="pg-option"><input type="radio" name="pg12" value="A" onchange="checkPG(12,'B')"> Harga obat tetap stabil dan tidak mengalami kenaikan</label>
+          <label class="pg-option"><input type="radio" name="pg12" value="B" onchange="checkPG(12,'B')"> Tidak terjadi kelebihan maupun kekurangan/kekosongan obat di unit pelayanan</label>
+          <label class="pg-option"><input type="radio" name="pg12" value="C" onchange="checkPG(12,'B')"> Seluruh obat yang diterima langsung didistribusikan ke pasien</label>
+          <label class="pg-option"><input type="radio" name="pg12" value="D" onchange="checkPG(12,'B')"> Pelaporan keuangan obat sesuai standar akuntansi pemerintah</label>
+        </div>
+        <div class="pg-feedback" id="pgFb12"></div>
+      </div>
+
+      <div class="sub-header">B.4 — Pengendalian Mutu Pelayanan Kefarmasian</div>
+
+      <!-- Soal 13 -->
+      <div class="pg-card">
+        <div class="pg-question"><span class="pg-num">13</span>Kegiatan monitoring pelayanan kefarmasian di Puskesmas mencakup tiga hal utama berikut...</div>
+        <div class="pg-options" id="pgOpts13">
+          <label class="pg-option"><input type="radio" name="pg13" value="A" onchange="checkPG(13,'B')"> Monitoring keuangan, monitoring SDM, dan monitoring sarana</label>
+          <label class="pg-option"><input type="radio" name="pg13" value="B" onchange="checkPG(13,'B')"> Monitoring pelayanan resep, monitoring penggunaan obat, dan monitoring kinerja tenaga kefarmasian</label>
+          <label class="pg-option"><input type="radio" name="pg13" value="C" onchange="checkPG(13,'B')"> Monitoring laporan LPLPO, monitoring stok opname, dan monitoring harga obat</label>
+          <label class="pg-option"><input type="radio" name="pg13" value="D" onchange="checkPG(13,'B')"> Monitoring pasien rawat jalan, monitoring rawat inap, dan monitoring UGD</label>
+        </div>
+        <div class="pg-feedback" id="pgFb13"></div>
+      </div>
+
+      <!-- Soal 14 -->
+      <div class="pg-card">
+        <div class="pg-question"><span class="pg-num">14</span>Audit Klinis dalam evaluasi pelayanan kefarmasian merupakan...</div>
+        <div class="pg-options" id="pgOpts14">
+          <label class="pg-option"><input type="radio" name="pg14" value="A" onchange="checkPG(14,'B')"> Pemeriksaan keuangan penggunaan anggaran obat oleh tim inspektorat</label>
+          <label class="pg-option"><input type="radio" name="pg14" value="B" onchange="checkPG(14,'B')"> Analisis kritis sistematis terhadap pelayanan kefarmasian mencakup prosedur, sumber daya, hasil, dan kualitas hidup pasien</label>
+          <label class="pg-option"><input type="radio" name="pg14" value="C" onchange="checkPG(14,'B')"> Penilaian pencapaian sasaran yang dilakukan oleh seluruh tenaga kefarmasian bersama</label>
+          <label class="pg-option"><input type="radio" name="pg14" value="D" onchange="checkPG(14,'B')"> Tinjauan pelaksanaan pelayanan kefarmasian tanpa dibandingkan dengan standar</label>
+        </div>
+        <div class="pg-feedback" id="pgFb14"></div>
+      </div>
+
+      <!-- Soal 15 -->
+      <div class="pg-card">
+        <div class="pg-question"><span class="pg-num">15</span>Teknik evaluasi dengan cara 'Review' berbeda dari Audit karena Review...</div>
+        <div class="pg-options" id="pgOpts15">
+          <label class="pg-option"><input type="radio" name="pg15" value="A" onchange="checkPG(15,'C')"> Dilakukan oleh pihak eksternal yang independen</label>
+          <label class="pg-option"><input type="radio" name="pg15" value="B" onchange="checkPG(15,'C')"> Menggunakan instrumen checklist yang sudah divalidasi secara nasional</label>
+          <label class="pg-option"><input type="radio" name="pg15" value="C" onchange="checkPG(15,'C')"> Merupakan tinjauan pelaksanaan pelayanan tanpa dibandingkan dengan standar</label>
+          <label class="pg-option"><input type="radio" name="pg15" value="D" onchange="checkPG(15,'C')"> Hanya dapat dilakukan pada akhir tahun anggaran</label>
+        </div>
+        <div class="pg-feedback" id="pgFb15"></div>
+      </div>
+
+      <div class="nav-strip">
+        <button class="btn btn-secondary" onclick="prevSection('secB','secA')">◀ Kembali</button>
+        <button class="btn btn-primary" onclick="nextSection('secB','secC')">Lanjut ke Bagian C ▶</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- BAGIAN C                                  -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section-card" id="secC">
+    <div class="section-header" onclick="toggleSection('secC')">
+      <span class="section-tag tag-c">C</span>
+      <div class="section-title-wrap">
+        <div class="section-title">Persepsi Penerapan di Tempat Kerja</div>
+        <div class="section-desc">Skala Likert + pertanyaan terbuka</div>
+      </div>
+      <span class="section-chevron">▾</span>
+    </div>
+    <div class="section-body">
+      <div class="notice notice-amber"><span class="notice-icon">⚠️</span>Bagian ini mengukur <strong>persepsi Anda sendiri</strong> — tidak ada jawaban benar atau salah. Jawaban yang jujur, termasuk jika Anda belum dapat menerapkan, justru paling berharga untuk perbaikan program.</div>
+
+      <div class="sub-header">C.1 — Penerapan Pengetahuan (skala 1–5)</div>
+      <p style="font-size:0.8rem; color:var(--mid); margin: 8px 0 12px;">1 = Tidak Sama Sekali &nbsp;|&nbsp; 2 = Hampir Tidak &nbsp;|&nbsp; 3 = Kadang-Kadang &nbsp;|&nbsp; 4 = Sering &nbsp;|&nbsp; 5 = Selalu / Sangat</p>
+
+      <div class="likert-wrap">
+        <table class="likert-table">
+          <thead>
+            <tr>
+              <th>Pernyataan</th>
+              <th>1<br><small>Tdk Sama Sekali</small></th>
+              <th>2<br><small>Hampir Tdk</small></th>
+              <th>3<br><small>Kadang</small></th>
+              <th>4<br><small>Sering</small></th>
+              <th>5<br><small>Selalu</small></th>
+            </tr>
+          </thead>
+          <tbody id="likertC1">
+            <tr><td>1. Saya menerapkan prosedur perencanaan kebutuhan obat secara lebih sistematis setelah pelatihan ini.</td><td><input type="radio" name="C1_1" value="1"></td><td><input type="radio" name="C1_1" value="2"></td><td><input type="radio" name="C1_1" value="3"></td><td><input type="radio" name="C1_1" value="4"></td><td><input type="radio" name="C1_1" value="5"></td></tr>
+            <tr><td>2. Saya menerapkan prinsip FEFO/FIFO dalam penyimpanan sediaan farmasi secara lebih konsisten.</td><td><input type="radio" name="C1_2" value="1"></td><td><input type="radio" name="C1_2" value="2"></td><td><input type="radio" name="C1_2" value="3"></td><td><input type="radio" name="C1_2" value="4"></td><td><input type="radio" name="C1_2" value="5"></td></tr>
+            <tr><td>3. Saya melakukan pengkajian resep (administratif, farmasetik, klinis) sebelum menyerahkan obat kepada pasien.</td><td><input type="radio" name="C1_3" value="1"></td><td><input type="radio" name="C1_3" value="2"></td><td><input type="radio" name="C1_3" value="3"></td><td><input type="radio" name="C1_3" value="4"></td><td><input type="radio" name="C1_3" value="5"></td></tr>
+            <tr><td>4. Saya memberikan informasi obat (cara pakai, efek samping, interaksi) kepada pasien secara lebih terstruktur.</td><td><input type="radio" name="C1_4" value="1"></td><td><input type="radio" name="C1_4" value="2"></td><td><input type="radio" name="C1_4" value="3"></td><td><input type="radio" name="C1_4" value="4"></td><td><input type="radio" name="C1_4" value="5"></td></tr>
+            <tr><td>5. Saya melakukan atau mencatat kegiatan konseling obat kepada pasien.</td><td><input type="radio" name="C1_5" value="1"></td><td><input type="radio" name="C1_5" value="2"></td><td><input type="radio" name="C1_5" value="3"></td><td><input type="radio" name="C1_5" value="4"></td><td><input type="radio" name="C1_5" value="5"></td></tr>
+            <tr><td>6. Saya mendokumentasikan kejadian efek samping obat (MESO) yang ditemukan di Puskesmas.</td><td><input type="radio" name="C1_6" value="1"></td><td><input type="radio" name="C1_6" value="2"></td><td><input type="radio" name="C1_6" value="3"></td><td><input type="radio" name="C1_6" value="4"></td><td><input type="radio" name="C1_6" value="5"></td></tr>
+            <tr><td>7. Saya mencatat dan melaporkan administrasi sediaan farmasi dan BMHP secara lebih lengkap dan tertib.</td><td><input type="radio" name="C1_7" value="1"></td><td><input type="radio" name="C1_7" value="2"></td><td><input type="radio" name="C1_7" value="3"></td><td><input type="radio" name="C1_7" value="4"></td><td><input type="radio" name="C1_7" value="5"></td></tr>
+            <tr><td>8. Saya menggunakan pengetahuan dari pelatihan ini sebagai acuan saat menghadapi permasalahan kefarmasian di Puskesmas.</td><td><input type="radio" name="C1_8" value="1"></td><td><input type="radio" name="C1_8" value="2"></td><td><input type="radio" name="C1_8" value="3"></td><td><input type="radio" name="C1_8" value="4"></td><td><input type="radio" name="C1_8" value="5"></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub-header">C.2 — Hambatan Penerapan</div>
+      <p style="font-size:0.82rem; color:var(--mid); margin:8px 0 12px;">Tandai semua hambatan yang pernah Anda alami (boleh lebih dari satu).</p>
+      <div class="checkbox-list" id="C2checks">
+        <label class="check-item"><input type="checkbox" name="C2" value="Sarana"> Keterbatasan sarana dan prasarana (ruang, peralatan, sistem informasi)</label>
+        <label class="check-item"><input type="checkbox" name="C2" value="SDM"> Keterbatasan jumlah SDM kefarmasian di Puskesmas</label>
+        <label class="check-item"><input type="checkbox" name="C2" value="BebanKerja"> Beban kerja terlalu tinggi sehingga tidak ada waktu untuk kegiatan farmasi klinis</label>
+        <label class="check-item"><input type="checkbox" name="C2" value="Kebijakan"> Kebijakan atau budaya kerja di Puskesmas yang belum mendukung standar kefarmasian</label>
+        <label class="check-item"><input type="checkbox" name="C2" value="Teoritis"> Materi pelatihan terasa terlalu teoritis / sulit diterapkan dalam kondisi nyata</label>
+        <label class="check-item"><input type="checkbox" name="C2" value="Pimpinan"> Kurangnya dukungan dari pimpinan atau atasan langsung</label>
+        <label class="check-item"><input type="checkbox" name="C2" value="PD"> Saya belum cukup percaya diri menerapkan pengetahuan baru tersebut</label>
+        <label class="check-item"><input type="checkbox" name="C2" value="TidakAda"> Tidak ada hambatan berarti — saya dapat menerapkan dengan baik</label>
+      </div>
+
+      <div class="field" style="margin-top:16px;">
+        <div class="field-label">Hambatan lain yang tidak tercantum di atas:</div>
+        <textarea id="C2lain" rows="2" placeholder="Tuliskan di sini jika ada..."></textarea>
+      </div>
+
+      <div class="sub-header">C.3 — Cerita Konkret</div>
+
+      <div class="field">
+        <div class="field-label">C3.1 Tuliskan SATU contoh konkret hal yang Anda lakukan berbeda atau lebih baik di Puskesmas setelah pelatihan ini. (Jika belum ada, silakan tulis alasannya.)</div>
+        <textarea id="C3_1" rows="4" placeholder="Contoh: Saya mulai membuat catatan MESO untuk setiap efek samping yang dilaporkan pasien, sebelumnya belum pernah dilakukan sama sekali..."></textarea>
+      </div>
+
+      <div class="field">
+        <div class="field-label">C3.2 Materi yang paling mudah Anda terapkan langsung di tempat kerja? Mengapa?</div>
+        <textarea id="C3_2" rows="3" placeholder="Contoh: Materi penyimpanan FEFO — karena langsung bisa diterapkan tanpa butuh dukungan sarana tambahan..."></textarea>
+      </div>
+
+      <div class="field">
+        <div class="field-label">C3.3 Materi yang paling sulit atau kurang relevan dengan kondisi Puskesmas Anda? Mengapa?</div>
+        <textarea id="C3_3" rows="3" placeholder="Contoh: Materi visite pasien — karena Puskesmas saya tidak memiliki rawat inap..."></textarea>
+      </div>
+
+      <div class="nav-strip">
+        <button class="btn btn-secondary" onclick="prevSection('secC','secB')">◀ Kembali</button>
+        <button class="btn btn-primary" onclick="nextSection('secC','secD')">Lanjut ke Bagian D ▶</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- BAGIAN D                                  -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="section-card" id="secD">
+    <div class="section-header" onclick="toggleSection('secD')">
+      <span class="section-tag tag-d">D</span>
+      <div class="section-title-wrap">
+        <div class="section-title">Kebermanfaatan Pelatihan &amp; Rekomendasi</div>
+        <div class="section-desc">Skala Likert + saran terbuka</div>
+      </div>
+      <span class="section-chevron">▾</span>
+    </div>
+    <div class="section-body">
+      <div class="notice notice-purple"><span class="notice-icon">💡</span>Kritik dan saran Anda dibutuhkan untuk meningkatkan kualitas MOOC berikutnya. Tidak ada jawaban yang mengecewakan.</div>
+
+      <div class="sub-header">D.1 — Relevansi dan Kualitas Materi (skala 1–5)</div>
+      <p style="font-size:0.8rem; color:var(--mid); margin:8px 0 12px;">1 = Sangat Tidak Relevan / Buruk &nbsp;→&nbsp; 5 = Sangat Relevan / Baik</p>
+
+      <div class="likert-wrap">
+        <table class="likert-table" style="--navy: #5B3A8C;">
+          <thead style="background: var(--purple);">
+            <tr>
+              <th style="background:#5B3A8C;">Aspek yang Dinilai</th>
+              <th style="background:#5B3A8C;">1</th><th style="background:#5B3A8C;">2</th><th style="background:#5B3A8C;">3</th><th style="background:#5B3A8C;">4</th><th style="background:#5B3A8C;">5</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1. Materi Konsep Pelayanan Kefarmasian (KONAS, SDM, pengendalian mutu)</td><td><input type="radio" name="D1_1" value="1"></td><td><input type="radio" name="D1_1" value="2"></td><td><input type="radio" name="D1_1" value="3"></td><td><input type="radio" name="D1_1" value="4"></td><td><input type="radio" name="D1_1" value="5"></td></tr>
+            <tr><td>2. Materi Pengelolaan Sediaan Farmasi dan BMHP</td><td><input type="radio" name="D1_2" value="1"></td><td><input type="radio" name="D1_2" value="2"></td><td><input type="radio" name="D1_2" value="3"></td><td><input type="radio" name="D1_2" value="4"></td><td><input type="radio" name="D1_2" value="5"></td></tr>
+            <tr><td>3. Materi Pelayanan Farmasi Klinis</td><td><input type="radio" name="D1_3" value="1"></td><td><input type="radio" name="D1_3" value="2"></td><td><input type="radio" name="D1_3" value="3"></td><td><input type="radio" name="D1_3" value="4"></td><td><input type="radio" name="D1_3" value="5"></td></tr>
+            <tr><td>4. Kedalaman materi secara keseluruhan</td><td><input type="radio" name="D1_4" value="1"></td><td><input type="radio" name="D1_4" value="2"></td><td><input type="radio" name="D1_4" value="3"></td><td><input type="radio" name="D1_4" value="4"></td><td><input type="radio" name="D1_4" value="5"></td></tr>
+            <tr><td>5. Kesesuaian materi dengan kondisi Puskesmas di wilayah saya</td><td><input type="radio" name="D1_5" value="1"></td><td><input type="radio" name="D1_5" value="2"></td><td><input type="radio" name="D1_5" value="3"></td><td><input type="radio" name="D1_5" value="4"></td><td><input type="radio" name="D1_5" value="5"></td></tr>
+            <tr><td>6. Kemutakhiran isi materi (sesuai regulasi terkini)</td><td><input type="radio" name="D1_6" value="1"></td><td><input type="radio" name="D1_6" value="2"></td><td><input type="radio" name="D1_6" value="3"></td><td><input type="radio" name="D1_6" value="4"></td><td><input type="radio" name="D1_6" value="5"></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub-header">D.2 — Kualitas Media dan Metode MOOC (skala 1–5)</div>
+      <div class="likert-wrap">
+        <table class="likert-table">
+          <thead>
+            <tr>
+              <th style="background:#5B3A8C;">Aspek yang Dinilai</th>
+              <th style="background:#5B3A8C;">1</th><th style="background:#5B3A8C;">2</th><th style="background:#5B3A8C;">3</th><th style="background:#5B3A8C;">4</th><th style="background:#5B3A8C;">5</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1. Kualitas video materi (gambar, suara, narasi)</td><td><input type="radio" name="D2_1" value="1"></td><td><input type="radio" name="D2_1" value="2"></td><td><input type="radio" name="D2_1" value="3"></td><td><input type="radio" name="D2_1" value="4"></td><td><input type="radio" name="D2_1" value="5"></td></tr>
+            <tr><td>2. Keterbacaan dan kejelasan teks / slide presentasi</td><td><input type="radio" name="D2_2" value="1"></td><td><input type="radio" name="D2_2" value="2"></td><td><input type="radio" name="D2_2" value="3"></td><td><input type="radio" name="D2_2" value="4"></td><td><input type="radio" name="D2_2" value="5"></td></tr>
+            <tr><td>3. Kemenarikan infografis sebagai media penyampaian</td><td><input type="radio" name="D2_3" value="1"></td><td><input type="radio" name="D2_3" value="2"></td><td><input type="radio" name="D2_3" value="3"></td><td><input type="radio" name="D2_3" value="4"></td><td><input type="radio" name="D2_3" value="5"></td></tr>
+            <tr><td>4. Kesesuaian kuis / evaluasi dengan tingkat materi</td><td><input type="radio" name="D2_4" value="1"></td><td><input type="radio" name="D2_4" value="2"></td><td><input type="radio" name="D2_4" value="3"></td><td><input type="radio" name="D2_4" value="4"></td><td><input type="radio" name="D2_4" value="5"></td></tr>
+            <tr><td>5. Kemudahan navigasi dan penggunaan platform LMS</td><td><input type="radio" name="D2_5" value="1"></td><td><input type="radio" name="D2_5" value="2"></td><td><input type="radio" name="D2_5" value="3"></td><td><input type="radio" name="D2_5" value="4"></td><td><input type="radio" name="D2_5" value="5"></td></tr>
+            <tr><td>6. Kecukupan waktu (JP) untuk memahami setiap modul</td><td><input type="radio" name="D2_6" value="1"></td><td><input type="radio" name="D2_6" value="2"></td><td><input type="radio" name="D2_6" value="3"></td><td><input type="radio" name="D2_6" value="4"></td><td><input type="radio" name="D2_6" value="5"></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub-header">D.3 — Kesan Keseluruhan (skala 1–5)</div>
+      <p style="font-size:0.8rem; color:var(--mid); margin:8px 0 12px;">1 = Sangat Tidak Setuju &nbsp;→&nbsp; 5 = Sangat Setuju</p>
+      <div class="likert-wrap">
+        <table class="likert-table">
+          <thead>
+            <tr>
+              <th style="background:#5B3A8C;">Pernyataan</th>
+              <th style="background:#5B3A8C;">1</th><th style="background:#5B3A8C;">2</th><th style="background:#5B3A8C;">3</th><th style="background:#5B3A8C;">4</th><th style="background:#5B3A8C;">5</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>1. Secara keseluruhan, saya puas dengan kualitas MOOC ini.</td><td><input type="radio" name="D3_1" value="1"></td><td><input type="radio" name="D3_1" value="2"></td><td><input type="radio" name="D3_1" value="3"></td><td><input type="radio" name="D3_1" value="4"></td><td><input type="radio" name="D3_1" value="5"></td></tr>
+            <tr><td>2. MOOC ini meningkatkan pemahaman saya tentang standar pelayanan kefarmasian di Puskesmas.</td><td><input type="radio" name="D3_2" value="1"></td><td><input type="radio" name="D3_2" value="2"></td><td><input type="radio" name="D3_2" value="3"></td><td><input type="radio" name="D3_2" value="4"></td><td><input type="radio" name="D3_2" value="5"></td></tr>
+            <tr><td>3. Saya akan merekomendasikan MOOC ini kepada rekan sejawat.</td><td><input type="radio" name="D3_3" value="1"></td><td><input type="radio" name="D3_3" value="2"></td><td><input type="radio" name="D3_3" value="3"></td><td><input type="radio" name="D3_3" value="4"></td><td><input type="radio" name="D3_3" value="5"></td></tr>
+            <tr><td>4. MOOC ini perlu dilanjutkan dengan pelatihan keterampilan (praktik langsung) agar lebih berdampak.</td><td><input type="radio" name="D3_4" value="1"></td><td><input type="radio" name="D3_4" value="2"></td><td><input type="radio" name="D3_4" value="3"></td><td><input type="radio" name="D3_4" value="4"></td><td><input type="radio" name="D3_4" value="5"></td></tr>
+            <tr><td>5. Format e-learning MOOC sesuai untuk pelatihan kefarmasian jarak jauh.</td><td><input type="radio" name="D3_5" value="1"></td><td><input type="radio" name="D3_5" value="2"></td><td><input type="radio" name="D3_5" value="3"></td><td><input type="radio" name="D3_5" value="4"></td><td><input type="radio" name="D3_5" value="5"></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="sub-header">D.4 — Saran dan Masukan</div>
+
+      <div class="field">
+        <div class="field-label">D4.1 Topik atau materi apa yang PERLU DITAMBAHKAN atau diperdalam pada MOOC berikutnya?</div>
+        <textarea id="D4_1" rows="3" placeholder="Contoh: Perlu ditambahkan materi tentang pengelolaan obat vaksin dan cold chain lebih mendalam..."></textarea>
+      </div>
+      <div class="field">
+        <div class="field-label">D4.2 Materi yang sebaiknya DIHAPUS atau DIPERSINGKAT karena kurang relevan?</div>
+        <textarea id="D4_2" rows="2" placeholder="Contoh: Bagian KONAS bisa dipersingkat karena terlalu konseptual dan tidak langsung aplikatif..."></textarea>
+      </div>
+      <div class="field">
+        <div class="field-label">D4.3 Saran untuk format, durasi, media, atau cara penyampaian MOOC:</div>
+        <textarea id="D4_3" rows="3" placeholder="Contoh: Durasi video sebaiknya tidak lebih dari 5 menit per topik, tambahkan lebih banyak video simulasi nyata di Puskesmas..."></textarea>
+      </div>
+      <div class="field">
+        <div class="field-label">D4.4 Pesan atau masukan lain untuk penyelenggara BBPK Ciloto:</div>
+        <textarea id="D4_4" rows="3" placeholder="Sampaikan apa saja yang ingin Anda katakan kepada tim BBPK Ciloto..."></textarea>
+      </div>
+
+      <div class="nav-strip">
+        <button class="btn btn-secondary" onclick="prevSection('secD','secC')">◀ Kembali</button>
+        <button class="btn btn-success" onclick="submitForm()">✓ Kirim Kuesioner</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════ -->
+  <!-- HASIL                                     -->
+  <!-- ══════════════════════════════════════════ -->
+  <div class="result-card" id="resultCard">
+    <div class="result-header">
+      <h2>✅ Kuesioner Berhasil Diisi</h2>
+      <div class="result-score-big" id="scoreBig">–</div>
+      <div class="result-label">Skor Retensi Pengetahuan (Bagian B)</div>
+    </div>
+    <div class="result-body">
+      <div class="result-grid">
+        <div class="result-stat">
+          <div class="result-stat-num" id="scoreCorrect">–</div>
+          <div class="result-stat-lbl">Soal benar dari 15</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-stat-num" id="scoreRating">–</div>
+          <div class="result-stat-lbl">Kualifikasi</div>
+        </div>
+      </div>
+
+      <div class="result-interp" id="resultInterp"></div>
+
+      <p style="font-size:0.88rem; font-weight:700; margin-bottom:8px;">📋 Ringkasan Jawaban (untuk disalin / dikirim via email)</p>
+      <p style="font-size:0.8rem; color:var(--mid); margin-bottom:8px;">Salin teks di bawah ini dan kirimkan ke alamat email penyelenggara EPP BBPK Ciloto.</p>
+      <div class="export-area" id="exportArea"></div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:16px;">
+        <button class="btn btn-primary" onclick="copyExport()">📋 Salin Ringkasan</button>
+        <button class="btn btn-secondary" onclick="printForm()">🖨 Cetak Halaman</button>
+        <button class="btn btn-danger" onclick="resetForm()">🔄 Isi Ulang</button>
+      </div>
+
+      <div class="notice notice-green" style="margin-top:20px;">
+        <span class="notice-icon">🙏</span>
+        <div><strong>Terima kasih telah meluangkan waktu mengisi kuesioner ini.</strong><br>
+        Setiap jawaban Anda berkontribusi langsung pada peningkatan kualitas pelatihan kefarmasian di Indonesia.<br>
+        <em style="font-size:0.8rem; color:var(--mid);">BBPK Ciloto — Himpunan Seminat Farmasi Kesehatan Masyarakat — 2024</em></div>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<footer class="site-footer">
+  EPP MOOC Standar Pelayanan Kefarmasian di Puskesmas &nbsp;|&nbsp; BBPK Ciloto 2024 &nbsp;|&nbsp; Semua data bersifat anonim dan digunakan untuk perbaikan program pelatihan
+</footer>
+
+<script>
+// ── KUNCI JAWABAN ─────────────────────────────
+const KUNCI = {
+  1:'B', 2:'C', 3:'D', 4:'B',
+  5:'B', 6:'C', 7:'B',
+  8:'C', 9:'B', 10:'C', 11:'C', 12:'B',
+  13:'B', 14:'B', 15:'C'
+};
+
+const FEEDBACK = {
+  1: 'Benar. Dua kegiatan pokok: pengelolaan sediaan farmasi & BMHP, dan pelayanan farmasi klinis (Permenkes No. 74/2016).',
+  2: 'Benar. Rasio yang dipersyaratkan adalah 1 Apoteker untuk 50 pasien per hari (Permenkes No. 26/2020).',
+  3: 'Benar. Tindakan komunikasi dan kerjasama antar staf termasuk unsur PROSES, bukan Input.',
+  4: 'Benar. Retrospektif = pengambilan data dilakukan setelah pelayanan dilaksanakan.',
+  5: 'Benar. Semua tenaga kefarmasian wajib memiliki STR dan SIP (Permenkes No. 26/2020).',
+  6: 'Benar. Narkotika dan psikotropika wajib disimpan dalam lemari terkunci khusus.',
+  7: 'Benar. \'Ruang\' bermakna fungsi, bukan wajib ruang fisik tersendiri — asal ada pemisahan yang jelas antar fungsi.',
+  8: 'Benar. Proses seleksi mengacu DOEN, Fornas, Formularium Kab, dan Formularium Puskesmas — bukan katalog harga.',
+  9: 'Benar. LPLPO ditandatangani tenaga kefarmasian dan diketahui Kepala Puskesmas (Permenkes No. 74/2016).',
+  10:'Benar. Kunci lemari narkotika/psikotropika dipegang oleh Apoteker penanggung jawab.',
+  11:'Benar. Arsip disimpan sekurang-kurangnya 5 tahun (Peraturan BPOM No. 4 Tahun 2018).',
+  12:'Benar. Pengendalian bertujuan mencegah kelebihan maupun kekurangan/kekosongan obat.',
+  13:'Benar. Tiga komponen monitoring: pelayanan resep, penggunaan obat, kinerja tenaga kefarmasian.',
+  14:'Benar. Audit Klinis = analisis kritis sistematis mencakup prosedur, sumber daya, hasil, dan kualitas hidup pasien.',
+  15:'Benar. Review = tinjauan pelaksanaan pelayanan TANPA dibandingkan dengan standar (contoh: kajian antibiotik).'
+};
+
+// ── TOGGLE SECTION ────────────────────────────
+function toggleSection(id) {
+  const el = document.getElementById(id);
+  el.classList.toggle('open');
+  updateProgress();
+}
+function openSection(id) {
+  document.getElementById(id).classList.add('open');
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  updateProgress();
+}
+function closeSection(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// ── NAVIGATION ────────────────────────────────
+function nextSection(currentId, nextId) {
+  if (currentId === 'secA' && !validateA()) return;
+  closeSection(currentId);
+  openSection(nextId);
+}
+function prevSection(currentId, prevId) {
+  closeSection(currentId);
+  openSection(prevId);
+}
+
+// ── VALIDATE BAGIAN A ─────────────────────────
+function validateA() {
+  let valid = true;
+  const requiredRadios = ['A2','A3','A4','A7','A8'];
+  requiredRadios.forEach(name => {
+    const fid = 'fA' + name.substring(1);
+    const checked = document.querySelector(`input[name="${name}"]:checked`);
+    const field = document.getElementById(fid);
+    if (!checked) { field.classList.add('invalid'); valid = false; }
+    else { field.classList.remove('invalid'); }
+  });
+  const reqTexts = [
+    { id: 'A5', fid: 'fA5' },
+    { id: 'A6', fid: 'fA6' }
+  ];
+  reqTexts.forEach(({ id, fid }) => {
+    const val = document.getElementById(id).value.trim();
+    const field = document.getElementById(fid);
+    if (!val) { field.classList.add('invalid'); valid = false; }
+    else { field.classList.remove('invalid'); }
+  });
+  if (!valid) {
+    document.getElementById('secA').scrollIntoView({ behavior:'smooth' });
+  }
+  return valid;
+}
+
+// ── HIGHLIGHT RADIO SELECTION ─────────────────
+document.querySelectorAll('.option-item input').forEach(input => {
+  input.addEventListener('change', function() {
+    const group = this.name;
+    document.querySelectorAll(`input[name="${group}"]`).forEach(r => {
+      r.closest('.option-item').classList.remove('selected');
+    });
+    this.closest('.option-item').classList.add('selected');
+    const fid = 'fA' + group.substring(1);
+    const field = document.getElementById(fid);
+    if (field) field.classList.remove('invalid');
+  });
+});
+
+// ── CHECK PG ──────────────────────────────────
+function checkPG(num, correctAnswer) {
+  const chosen = document.querySelector(`input[name="pg${num}"]:checked`);
+  if (!chosen) return;
+  const isCorrect = chosen.value === correctAnswer;
+  const opts = document.getElementById(`pgOpts${num}`);
+  const fb   = document.getElementById(`pgFb${num}`);
+
+  opts.querySelectorAll('.pg-option').forEach(opt => {
+    const inp = opt.querySelector('input');
+    opt.classList.remove('selected');
+    if (inp.value === chosen.value) opt.classList.add('selected');
+  });
+
+  fb.className = 'pg-feedback ' + (isCorrect ? 'correct' : 'wrong');
+  if (isCorrect) {
+    fb.innerHTML = '✅ ' + FEEDBACK[num];
+  } else {
+    fb.innerHTML = `❌ Jawaban kurang tepat. Jawaban yang benar adalah <strong>pilihan ${correctAnswer}</strong>. ${FEEDBACK[num]}`;
+  }
+
+  // disable options after answered
+  opts.querySelectorAll('input').forEach(i => i.disabled = true);
+}
+
+// ── PROGRESS BAR ─────────────────────────────
+function updateProgress() {
+  const sections = ['secA','secB','secC','secD'];
+  let answered = 0;
+  // count answered PG
+  for (let i=1; i<=15; i++) {
+    if (document.querySelector(`input[name="pg${i}"]:checked`)) answered++;
+  }
+  const pct = Math.min(100, Math.round(answered / 15 * 60) + (document.getElementById('resultCard').classList.contains('show') ? 40 : 0));
+  document.getElementById('progressBar').style.width = pct + '%';
+}
+
+// ── SUBMIT ────────────────────────────────────
+function submitForm() {
+  // count score
+  let correct = 0;
+  for (let i = 1; i <= 15; i++) {
+    const chosen = document.querySelector(`input[name="pg${i}"]:checked`);
+    if (chosen && chosen.value === KUNCI[i]) correct++;
+  }
+  const score = Math.round(correct / 15 * 100);
+  let rating, interpColor, interpText;
+
+  if (score >= 90) {
+    rating = 'Sangat Memuaskan'; interpColor = '#1A7A4A';
+    interpText = `Retensi pengetahuan Anda sangat baik (${score}/100). Ini mengindikasikan materi MOOC telah melekat dengan kuat. Terima kasih atas dedikasi Anda dalam mengikuti pelatihan ini.`;
+  } else if (score >= 70) {
+    rating = 'Memuaskan'; interpColor = '#2E86C1';
+    interpText = `Retensi pengetahuan Anda baik (${score}/100). Sebagian besar konsep utama telah dipahami. Beberapa soal yang terlewat dapat menjadi bahan refleksi untuk penguatan.`;
+  } else if (score >= 50) {
+    rating = 'Cukup'; interpColor = '#B7770D';
+    interpText = `Retensi pengetahuan Anda cukup (${score}/100). Ada beberapa konsep yang perlu ditinjau ulang. Tim BBPK Ciloto akan menggunakan data ini untuk memperkuat penyajian materi tersebut.`;
+  } else {
+    rating = 'Perlu Penguatan'; interpColor = '#C0392B';
+    interpText = `Skor retensi ${score}/100 menunjukkan beberapa materi belum melekat optimal. Ini bukan penilaian personal — data ini justru sangat berharga untuk perbaikan kurikulum MOOC berikutnya.`;
+  }
+
+  document.getElementById('scoreBig').textContent   = score;
+  document.getElementById('scoreCorrect').textContent = `${correct} / 15`;
+  document.getElementById('scoreRating').textContent  = rating;
+
+  const interp = document.getElementById('resultInterp');
+  interp.style.background = interpColor + '15';
+  interp.style.borderLeft = `4px solid ${interpColor}`;
+  interp.style.borderRadius = '8px';
+  interp.style.padding = '14px 18px';
+  interp.innerHTML = interpText;
+
+  // build export text
+  const now = new Date().toLocaleString('id-ID');
+  const profesi  = document.querySelector('input[name="A2"]:checked')?.value || '-';
+  const status   = document.querySelector('input[name="A3"]:checked')?.value || '-';
+  const lama     = document.querySelector('input[name="A4"]:checked')?.value || '-';
+  const prov     = document.getElementById('A5').value.trim() || '-';
+  const kota     = document.getElementById('A6').value.trim() || '-';
+  const aktif    = document.querySelector('input[name="A7"]:checked')?.value || '-';
+  const motivasi = document.querySelector('input[name="A8"]:checked')?.value || '-';
+
+  const C2vals = [...document.querySelectorAll('input[name="C2"]:checked')].map(x=>x.value).join(', ') || '-';
+
+  let pgAnswers = '';
+  for (let i=1; i<=15; i++) {
+    const v = document.querySelector(`input[name="pg${i}"]:checked`)?.value || '-';
+    const benar = v === KUNCI[i] ? '✓' : '✗';
+    pgAnswers += `  Soal ${String(i).padStart(2,' ')}: ${v} ${benar}\n`;
+  }
+
+  const getL = (name, max) => {
+    let s = '';
+    for (let i=1; i<=max; i++) {
+      const v = document.querySelector(`input[name="${name}_${i}"]:checked`)?.value || '-';
+      s += `  ${name}.${i}: ${v}\n`;
+    }
+    return s;
+  };
+
+  const exportText =
+`═══════════════════════════════════════════
+HASIL EPP MOOC STANDAR PELAYANAN KEFARMASIAN DI PUSKESMAS
+BBPK Ciloto — ${now}
+═══════════════════════════════════════════
+
+[A] PROFIL
+  Profesi   : ${profesi}
+  Status    : ${status}
+  Lama      : ${lama}
+  Provinsi  : ${prov}
+  Kab/Kota  : ${kota}
+  Aktif     : ${aktif}
+  Motivasi  : ${motivasi}
+
+[B] RETENSI PENGETAHUAN
+  Skor      : ${score}/100 (${correct}/15 benar) — ${rating}
+${pgAnswers}
+[C] PERSEPSI PENERAPAN
+  C1 (Likert):
+${getL('C1',8)}  C2 Hambatan : ${C2vals}
+  C3.1: ${document.getElementById('C3_1').value.trim() || '-'}
+  C3.2: ${document.getElementById('C3_2').value.trim() || '-'}
+  C3.3: ${document.getElementById('C3_3').value.trim() || '-'}
+
+[D] KEBERMANFAATAN
+  D1 (Relevansi):
+${getL('D1',6)}  D2 (Media):
+${getL('D2',6)}  D3 (Kesan):
+${getL('D3',5)}  D4.1: ${document.getElementById('D4_1').value.trim() || '-'}
+  D4.2: ${document.getElementById('D4_2').value.trim() || '-'}
+  D4.3: ${document.getElementById('D4_3').value.trim() || '-'}
+  D4.4: ${document.getElementById('D4_4').value.trim() || '-'}
+═══════════════════════════════════════════`;
+
+  document.getElementById('exportArea').textContent = exportText;
+
+  // show result
+  const card = document.getElementById('resultCard');
+  card.classList.add('show');
+  card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.getElementById('progressBar').style.width = '100%';
+
+  // close all sections
+  ['secA','secB','secC','secD'].forEach(closeSection);
+}
+
+// ── COPY EXPORT ──────────────────────────────
+function copyExport() {
+  const text = document.getElementById('exportArea').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    alert('Ringkasan berhasil disalin ke clipboard. Anda dapat menempelkannya di email atau WhatsApp untuk dikirim ke penyelenggara.');
+  }).catch(() => {
+    document.getElementById('exportArea').select();
+    document.execCommand('copy');
+    alert('Teks telah dipilih. Tekan Ctrl+C (atau Cmd+C di Mac) untuk menyalin.');
+  });
+}
+
+// ── PRINT ─────────────────────────────────────
+function printForm() { window.print(); }
+
+// ── RESET ─────────────────────────────────────
+function resetForm() {
+  if (!confirm('Anda yakin ingin mengisi ulang? Semua jawaban akan dihapus.')) return;
+  location.reload();
+}
+
+// Auto-remove invalid on input
+document.querySelectorAll('.text-input, textarea').forEach(el => {
+  el.addEventListener('input', function() {
+    const pf = this.closest('.field');
+    if (pf) pf.classList.remove('invalid');
+  });
+});
+</script>
+</body>
+</html>
